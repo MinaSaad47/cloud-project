@@ -1,0 +1,30 @@
+﻿@model List<Games.Mvc.Entities.Game>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Games</h1>
+
+    <div class="container">
+        <div class="row">
+            @foreach (var game in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img src="@game.PictureUrl" class="card-img-top" alt="Game Image">
+                        <div class="card-body">
+                            <h5 class="card-title">@game.Name</h5>
+                            <p class="card-text">@game.Description</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a href="@game.Url" class="btn btn-sm btn-outline-secondary">View</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

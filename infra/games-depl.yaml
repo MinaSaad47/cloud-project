@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: games
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: games
+  template:
+    metadata:
+      labels:
+        app: games
+    spec:
+      containers:
+        - name: games
+          image: localhost/games:v1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+            - name: OpenIdSettings__Authority
+              value: "http://keycloak:8080/realms/master"
+            - name: OpenIdSettings__ClientId
+              value: "mvc-client"
+            - name: OpenIdSettings__ClientSecret
+              value: "MVi1JGCZ0TuNBEXCTtLozOQUBvbnXv8l"
+            - name: OpenIdSettings__CallbackPath
+              value: "/login-callback"
+            - name: ConnectionStrings__DefaultConnection
+              value: "Host=postgresql;Port=5432;Database=postgres;User Id=postgres;Password=postgres;"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: games
+spec:
+  selector:
+    app: games
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
